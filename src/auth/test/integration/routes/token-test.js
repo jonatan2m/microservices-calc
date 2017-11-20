@@ -1,9 +1,9 @@
 import jwt from 'jwt-simple'
 
 describe('Route Token', () => {
-
+    const Users = app.datasource.models.Users;
     const defaultUser = {
-        id: 1,
+        id: 2,
         name: 'Default User',
         email: 'test@mail.com',
         password: 'test'
@@ -12,7 +12,7 @@ describe('Route Token', () => {
     let token;
 
     beforeEach(done => {
-        const Users = app.datasource.models.Users;
+
         Users
             .destroy({ where: {} })
             .then(() => Users.create({
@@ -20,14 +20,14 @@ describe('Route Token', () => {
                 email: 'admin@mail.com',
                 password: '123456'
             }))
-        // .then(user => {
-        //     Users.create(defaultUser)
-        //         .then(() => {
-        //             token = jwt.encode({ id: user.id }, app.config.jwtSecret)
-        //         })
-        // })
+            .then(user => {
+                Users.create(defaultUser)
+                    .then(() => {
+                        token = jwt.encode({ id: user.id }, app.config.jwtSecret)
+                        done();
+                    })
+            })
 
-        done();
     })
 
     it('should return 401 when the credential is invalid', done => {
@@ -55,7 +55,6 @@ describe('Route Token', () => {
             .post('/token')
             .send(user)
             .end((err, res) => {
-                console.log(22222222222, res.statusCode);
                 expect(res.statusCode).to.be.eql(200);
                 done();
             })

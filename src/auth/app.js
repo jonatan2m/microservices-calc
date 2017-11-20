@@ -36,6 +36,7 @@ app.route('/token')
         }
     })
 
+
 app.route('/users')
     .post((req, res) => {
         Users.create(req.body)

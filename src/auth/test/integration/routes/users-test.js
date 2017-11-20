@@ -1,5 +1,5 @@
 describe('Route Users', () => {
-
+    const Users = app.datasource.models.Users;
     const defaultUser = {
         id: 1,
         name: 'Default User',
@@ -7,15 +7,15 @@ describe('Route Users', () => {
         password: 'test'
     };
 
-    // beforeEach(done => {
-    //     const Users = app.datasource.models.Users;
-    //     Users
-    //         .destroy({ where: {} })
-    //         .then(() => Users.create(defaultUser))
-    //         .then(() => {
-    //             done();
-    //         })
-    // })
+    beforeEach(done => {
+
+        Users
+            .destroy({ where: {} })
+            .then(() => Users.create(defaultUser))
+            .then(() => {
+                done();
+            })
+    })
 
     it('should not create an user without password', done => {
         const user = {
