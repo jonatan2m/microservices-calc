@@ -1,5 +1,3 @@
-import jwt from 'jwt-simple'
-
 describe('Route Token', () => {
     const Users = app.datasource.models.Users;
     const defaultUser = {
@@ -9,25 +7,14 @@ describe('Route Token', () => {
         password: 'test'
     };
 
-    let token;
-
     beforeEach(done => {
 
         Users
             .destroy({ where: {} })
-            .then(() => Users.create({
-                name: 'Admin',
-                email: 'admin@mail.com',
-                password: '123456'
-            }))
-            .then(user => {
-                Users.create(defaultUser)
-                    .then(() => {
-                        token = jwt.encode({ id: user.id }, app.config.jwtSecret)
-                        done();
-                    })
+            .then(() => Users.create(defaultUser))
+            .then(() => {
+                done();
             })
-
     })
 
     it('should return 401 when the credential is invalid', done => {
@@ -48,8 +35,8 @@ describe('Route Token', () => {
 
     it('should return 200 when the credential is valid', done => {
         const user = {
-            email: 'admin@mail.com',
-            password: '123456'
+            email: 'test@mail.com',
+            password: 'test'
         }
         request
             .post('/token')

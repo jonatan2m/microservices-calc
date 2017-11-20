@@ -49,6 +49,40 @@ app.route('/users')
                 res.json(err);
             })
     })
+    .get((req, res) => {
+        Users.findAll({})
+            .then(result => {
+                res.status(200);
+                res.json(result);
+            })
+            .catch(err => {
+                res.status(400);
+                res.json(err);
+            })
+    })
 
+app.route('/users/:id')
+    .get((req, res) => {
+        Users.findOne({ where: req.params })
+            .then(user => {
+                res.status(200)
+                res.json(user)
+            })
+            .catch(err => {
+                res.status(400)
+                res.json(err)
+            })
+    })
+    .put((req, res) => {
+        Users.update(req.body, { where: req.params })
+            .then(user => {
+                res.status(200)
+                res.json(user)
+            })
+            .catch(err => {
+                res.status(400)
+                res.json(err)
+            })
+    })
 
 export default app;
