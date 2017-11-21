@@ -44,6 +44,7 @@ app.route('/token')
 
 
 app.route('/users')
+    .all(auth.authenticate())
     .post((req, res) => {
         Users.create(req.body)
             .then(result => {

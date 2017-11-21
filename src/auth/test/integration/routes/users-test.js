@@ -1,8 +1,9 @@
 import jwt from 'jwt-simple'
+
 describe('Route Users', () => {
     const Users = app.datasource.models.Users;
     const defaultUser = {
-        id: 2,
+        id: 1,
         name: 'Default User',
         email: 'test@mail.com',
         password: 'test'
@@ -40,6 +41,7 @@ describe('Route Users', () => {
 
         request
             .post('/users')
+            .set('Authorization', `Bearer ${token}`)
             .send(user)
             .end((err, res) => {
                 expect(res.statusCode).to.be.eql(400);
@@ -57,6 +59,7 @@ describe('Route Users', () => {
 
         request
             .post('/users')
+            .set('Authorization', `Bearer ${token}`)
             .send(user)
             .end((err, res) => {
                 expect(res.body.id).to.be.eql(user.id);
@@ -70,19 +73,21 @@ describe('Route Users', () => {
     it('should return a list of users', done => {
         request
             .get('/users')
+            .set('Authorization', `Bearer ${token}`)
             .end((err, res) => {
-                expect(res.body[1].id).to.be.eql(defaultUser.id);
-                expect(res.body[1].name).to.be.eql(defaultUser.name);
-                expect(res.body[1].email).to.be.eql(defaultUser.email);
                 expect(res.statusCode).to.be.eql(200);
-                done(err);
+                expect(res.body[0].id).to.be.eql(defaultUser.id);
+                expect(res.body[0].name).to.be.eql(defaultUser.name);
+                expect(res.body[0].email).to.be.eql(defaultUser.email);
+                done();
             })
     })
 
     it('should return an user', done => {
 
         request
-            .get('/users/2')
+            .get('/users/1')
+            .set('Authorization', `Bearer ${token}`)
             .end((err, res) => {
                 expect(res.body.id).to.be.eql(defaultUser.id);
                 expect(res.body.name).to.be.eql(defaultUser.name);
@@ -95,12 +100,13 @@ describe('Route Users', () => {
     it('should update an user', done => {
 
         var userUpdated = {
-            id: 2,
+            id: 1,
             name: 'New Name'
         }
 
         request
-            .put('/users/2')
+            .put('/users/1')
+            .set('Authorization', `Bearer ${token}`)
             .send(userUpdated)
             .end((err, res) => {
                 expect(res.body).to.be.eql([1]);

@@ -9,6 +9,7 @@ export default app => {
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 
     const strategy = new Strategy(opts, (payload, done) => {
+
         Users.findById(payload.id)
             .then(user => {
                 if (user) {
@@ -26,6 +27,6 @@ export default app => {
 
     return {
         initialize: () => passport.initialize(),
-        authenticate: () => passport.authenticate('jwt', app.config.jwtSecret)
+        authenticate: () => passport.authenticate('jwt', app.config.jwtSession)
     }
 }
