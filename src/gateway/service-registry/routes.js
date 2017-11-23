@@ -78,7 +78,8 @@ export default app => {
                 })
         })
         .delete((req, res) => {
-            Services.destroy(req.body, { where: req.params })
+            console.log(`Service "${req.params.name}" asking for unregister`)
+            Services.destroy({ where: req.params })
                 .then(result => {
                     res.status(200)
                     res.json(result)

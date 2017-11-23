@@ -111,7 +111,7 @@ describe('Route Services', () => {
     it('should delete a service', done => {
 
         request
-            .get('/services/add')
+            .delete('/services/add')
             .end((err, res) => {
                 expect(res.statusCode).to.be.eql(200);
                 done(err);

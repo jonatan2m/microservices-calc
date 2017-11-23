@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "(set NODE_ENV=prod) && babel-node index.js",
+    "start": "(set SELF_REGISTRY=true) && (set NODE_ENV=prod) && babel-node index.js",
     "dev": "(set NODE_ENV=dev) && babel-node index.js",
     "test-i": "(set NODE_ENV=test) && mocha --opts test/integration/mocha.opts test/integration/**/*.js"
   },
