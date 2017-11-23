@@ -19,16 +19,23 @@ export default app => {
 
     app.route('/services')
         .post((req, res) => {
+            console.log(`Service "${req.body.name}" asking for register`)
 
             if (validateService(req.body)) {
                 Services.create(req.body)
                     .then(result => {
                         res.status(201)
                         res.json(result);
+                        console.log(`Service "${result.name}" was registered`)
                     })
                     .catch(err => {
                         res.status(400)
-                        res.json(err);
+                        res.json(err.errors
+                            .reduce((before, item) => {
+                                before += item.message;
+                                return before;
+                            }, ""));
+                        console.log(`Service "${req.body.name}" can't registered`)
                     })
             }
             else
