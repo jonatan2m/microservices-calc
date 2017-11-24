@@ -77,4 +77,10 @@ export default app => {
                     res.json(err)
                 })
         })
+
+        app.route("/*")
+            .all((req, res) => {
+                console.log(req.params, req.method);
+                res.sendStatus(200);
+            })
 }

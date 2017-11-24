@@ -47,4 +47,14 @@ describe('Route Token', () => {
             })
     })
 
+    it('TEMP', done => {
+        
+        request
+            .get('/add/1')
+            .end((err, res) => {
+                expect(res.statusCode).to.be.eql(200);
+                done();
+            })
+    })
+
 })
