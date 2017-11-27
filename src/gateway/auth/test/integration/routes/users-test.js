@@ -1,6 +1,6 @@
 import jwt from 'jwt-simple'
 
-describe('Route Users', () => {
+xdescribe('Route Users', () => {
     const Users = app.datasource.models.Users;
     const defaultUser = {
         id: 1,

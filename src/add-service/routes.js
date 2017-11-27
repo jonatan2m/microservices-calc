@@ -8,6 +8,7 @@ export default app => {
 
     app.route('/add')
         .post((req, res) => {
+            console.log('requesting from ', req.origin)
 
             var numbersPromise = findExist(req.body);
 

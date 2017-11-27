@@ -1,4 +1,4 @@
-const http = require('http')
+import http from 'http'
 import app from './app'
 import { Buffer } from 'buffer';
 
@@ -17,7 +17,9 @@ function register() {
             endpoints: {
                 values: [{
                     type: 'http',
-                    url: '127.0.0.1:4000/add'
+                    url: '127.0.0.1',
+                    path: '/add',
+                    port: 4000
                 }]
             }
         }
