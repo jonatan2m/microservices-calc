@@ -1,6 +1,6 @@
 import jwt from 'jwt-simple'
 
-xdescribe('Route Users', () => {
+describe('Route Users', () => {
     const Users = app.datasource.models.Users;
     const defaultUser = {
         id: 1,
@@ -59,7 +59,7 @@ xdescribe('Route Users', () => {
 
         request
             .post('/users')
-            .set('Authorization', `Bearer ${token}`)
+            //.set('Authorization', `Bearer ${token}`)
             .send(user)
             .end((err, res) => {
                 expect(res.body.id).to.be.eql(user.id);

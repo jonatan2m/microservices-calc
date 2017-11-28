@@ -10,5 +10,14 @@ export default {
         }
     },
     jwtSecret: 'D5j8EVpIqChPQynibCbt',
-    jwtSession: { session: false }
+    jwtSession: { session: false },
+    serviceRegistry: {
+        url: '127.0.0.1',
+        path: '/services',
+        port: 3001,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
 }

@@ -31,7 +31,6 @@ export default app => {
 
 
     app.route('/users')
-        .all(auth.authenticate())
         .post((req, res) => {
             Users.create(req.body)
                 .then(result => {
@@ -43,6 +42,7 @@ export default app => {
                     res.json(err);
                 })
         })
+        .all(auth.authenticate())
         .get((req, res) => {
             Users.findAll({})
                 .then(result => {
@@ -80,22 +80,13 @@ export default app => {
         })
 
     app.route("/*")
+        .all(auth.authenticate())
         .all((req, res) => {
             console.log(req.params, req.method);
             let Routes = [];
 
-            const serviceRegistry = {
-                url: '127.0.0.1',
-                path: '/services',
-                port: 3001,
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-
             let serviceRegistryPromise = new Promise((resolve, reject) => {
-                let request = http.request(serviceRegistry, serviceRegistryResponse => {
+                let request = http.request(app.config.serviceRegistry, serviceRegistryResponse => {
                     var data = "";
                     serviceRegistryResponse.on('data', chunk => {
                         data += chunk;
